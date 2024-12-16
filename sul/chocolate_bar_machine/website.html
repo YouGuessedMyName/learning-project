@@ -1,0 +1,193 @@
+<html>
+
+<head>
+<script src="jquery-3.1.1.min.js"></script>  
+<style>
+.machine {
+    border: 2px solid black;
+	align: center;
+	width: 300px;
+	background-color: green;
+}
+
+td {
+	text-align: center;
+	height: 50px;
+	padding-left: 20px;
+	padding-right: 20px;
+	
+}
+.wallet {
+	background-image: url("wallet.jpg");
+	background-size: contain;
+	color: white;
+	font-size: 30px;
+	text-vertical-align: middle;
+	width: 200px;
+	height: 130px;
+}
+
+.output{
+	border: 2px solid black;
+	background-color: gray;
+	width: 100px;
+}
+
+h1{
+	text-align: center;
+}
+
+</style>
+</head>
+
+<body>
+<table>
+<th colspan="2"><h1>Chocolate Bar Machine</h1></th>
+<tr><td>
+
+<table class="machine">
+<tr><td colspan="3">
+<div id="coins">
+<button id="10ct" data-amount="10" class="money">
+10ct
+</button>
+<button id="5ct" data-amount="5" class="money">
+5ct
+</button>
+</div>
+</td></tr>
+<tr><td colspan="3">
+<div id="chocs" >
+	
+</div>
+</td></tr>
+<tr><td colspan="3">
+<button id="continue">
+continue
+</button>
+</td></tr>
+<tr><td></td><td class="output">
+<span id="output"></span>
+</td><td></td></tr>
+<tr><td colspan="3">
+<button id="reset">
+reset
+</button>
+</td></tr>
+</table>
+
+</td>
+
+<td>
+<div class="wallet">
+<br/>
+&#8364; 0,<span id="money"></span><br/>
+</div>
+</td></tr>
+</table>
+
+<script>
+var money = 0;
+var chocs = [{name:"mars", cost:10}, {name:"twix", cost:15}, {name:"snickers", cost:25}]; 
+
+
+function addMoney(x) {
+	money += x;
+	refresh();
+}
+
+function subtractMoney(x) {
+	money -= x;
+	refresh();
+}
+
+function OnContinue() {
+	$(".money").each(function(i) {
+		var me = $(this);
+		me.show();
+	});
+	refresh();
+}
+
+function hideMoney() {
+	$(".money").each(function(i) {
+		var me = $(this);
+		me.hide();
+	});
+}
+
+function setMoney() {
+	if(money == 0)
+		$("#money").html("00");
+	else if(money == 5)
+		$("#money").html("05");
+	else
+		$("#money").html(money);
+}
+
+function showChoc(name) {
+	$("#output").html("<img src='" + name + ".png' width='100' />");
+	$(".choc").each(function(i) {
+		var me = $(this);
+		me.hide();
+	});
+	hideMoney();
+	$("#continue").show();
+	setMoney();
+}
+
+function reset() {
+	money = 0;
+	OnContinue();
+}
+
+function refresh() {
+	setMoney();
+	$(".choc").each(function(i) {
+		var me = $(this);
+		if (parseInt(me.attr("data-cost")) <= money)
+			me.show();
+		else
+			me.hide();
+	});
+	$("#continue").hide();
+	$("#output").html("");
+} 
+
+	$(function() {
+		$("#continue").click(function() {
+			OnContinue();
+		});
+		$(".money").click(function() { 
+			if(money <= 25)
+				addMoney(parseInt($(this).attr("data-amount")));
+			else if(money >= 30)
+			{
+				addMoney(parseInt($(this).attr("data-amount")));
+				hideMoney();
+			}
+		});
+		chocs.forEach(function(c) {
+			$("#chocs").append(
+				$("<button>")
+					.attr("id", c.name)
+					.attr("data-cost", c.cost)
+					.addClass("choc")
+					.html(c.name)
+					.click(function(e) { 
+						subtractMoney(c.cost);
+						showChoc(c.name);
+					})
+					
+			); 
+		});
+		$("#reset").click(function() {
+			reset();
+		});
+		refresh();
+		
+	});
+	
+</script>
+</body>
+</html>
