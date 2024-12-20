@@ -57,7 +57,7 @@ public class SeleniumChocolateBarMachineLearner {
         SUL<String, String> sul = new SeleniumSUL(sulURI, driver);
         BasicLearner.runControlledExperiment(
                 sul,
-                BasicLearner.LearningMethod.RivestSchapire,
+                BasicLearner.LearningMethod.TTT,
                 BasicLearner.TestingMethod.UserQueries,
                 inputAlphabet);
 

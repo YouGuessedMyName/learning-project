@@ -1,0 +1,13 @@
+digraph g {
+
+	s0 [shape="circle" label="s0"];
+	s0 -> s0 [label="5ct / OK"];
+	s0 -> s0 [label="10ct / OK"];
+	s0 -> s0 [label="mars / NOK"];
+	s0 -> s0 [label="snickers / NOK"];
+	s0 -> s0 [label="twix / NOK"];
+
+__start0 [label="" shape="none" width="0" height="0"];
+__start0 -> s0;
+
+}
