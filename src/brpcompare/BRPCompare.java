@@ -15,8 +15,8 @@ import java.util.Collection;
 public class BRPCompare {
 
     public static void main(String[] args) throws IOException {
-        String model1 = "/results/hypothesis0.dot",
-                model2 = "/results/hypothesis1.dot";
+        String model1 = "/NewResults/Ref/learnedModel.dot",
+                model2 = "/NewResults/Mutant6/learnedModel.dot";
         Collection<String> inputAlphabet = ImmutableSet.of("IACK", "IREQ_0_0_0", "IREQ_0_0_1", "IREQ_0_1_0", "IREQ_0_1_1", "IREQ_1_0_0", "IREQ_1_0_1", "IREQ_1_1_0", "IREQ_1_1_1", "ISENDFRAME", "ITIMEOUT");
         
         GraphvizParser p = new GraphvizParser(Paths.get(new File("").getAbsolutePath().concat(model1)));
